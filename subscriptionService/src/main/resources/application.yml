@@ -22,7 +22,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 
 server:
-  port: 8083
+  port: 8084
 
 eureka:
   instance:

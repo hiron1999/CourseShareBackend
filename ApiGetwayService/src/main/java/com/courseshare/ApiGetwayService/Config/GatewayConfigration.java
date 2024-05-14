@@ -117,6 +117,15 @@ public class GatewayConfigration {
                                 )
                                 .uri("lb://aws-service")
                         )
+                .route("SubscritionApiEndpoint-route",
+                        r ->r
+                                .path("/subscriptionApi/**")
+                                .filters(
+                                        f->f
+                                                .rewritePath("/subscriptionApi/(?<remaining>.*)","/${remaining}")
+                                )
+                                .uri("lb://subscription-service")
+                        )
 
                 .build();
     }

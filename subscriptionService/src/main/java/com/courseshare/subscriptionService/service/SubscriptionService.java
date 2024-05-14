@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.courseshare.subscriptionService.entity.SubscriptionEntity;
 import com.courseshare.subscriptionService.model.SubscriptionRequest;
+import org.springframework.stereotype.Service;
+
 
 public interface SubscriptionService {
 
