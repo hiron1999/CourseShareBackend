@@ -1,0 +1,17 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: AWS-SERVICE
+
+aws:
+  accessKeyId: AKIAYG42OWDMXDKPHUVY
+  secretkey: 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
+  s3:
+    bucketname: myfreebucket122343
+    region: ap-south-1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

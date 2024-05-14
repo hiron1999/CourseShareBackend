@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: reistry-naming-server
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    fetchRegistry: 'false'
+    registerWithEureka: 'false'
+    service-url:
+      defaultZone: http://localhost:8761/eureka

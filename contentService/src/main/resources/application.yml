@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: CONTENT-SERVICE
+  data:
+    mongodb:
+      uri: mongodb://localhost:3344/MyContent
+      database: MyContent
+#      authentication-database: admin # Optional, only if authentication is enabled
+#      gridfs:
+#        bucket: your-gridfs-bucket
+server:
+  port: 8082
+
+  jpa:
+    show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+#  instance:
+#    prefer-ip-address: false
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
