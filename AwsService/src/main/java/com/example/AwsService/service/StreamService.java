@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -25,18 +26,18 @@ public class StreamService {
     @Autowired
     private ResourceLoader resourceLoader;
     @Autowired
-    private AwsS3Service awsS3Service;
+    private ResourceStorageService storageService;
 
-    public ResponseEntity<byte[]> getVideo(String title, String range) {
+
+    public Mono<ResponseEntity<byte[]>> getVideo(String mappingId, String range) {
 
 //        return Mono.fromSupplier(()->resourceRegion(
 //                resourceLoader.getResource(String.format(FORMAT,title)),range.split("=")[1]));
 
-        File file = new File(String.format(DIRECTORY, title));
-        if (!file.isFile()) {
-//            awsS3Service.saveFile(title);
-            log.info("file not found call s3 client.........");
-        }
+       return storageService.getResource(mappingId).map(
+                file -> {
+
+
 
         String[] ranges =range.split("=")[1].split("-");
         long start_range = 0;
@@ -47,7 +48,7 @@ public class StreamService {
 //            end_range = ranges.length > 1 ? Long.parseLong(ranges[1]) : start_range + 1024;
         }
 
-        byte[] data= getContentByRange(file,  start_range);
+        byte[] data=getContentByRange(file,  start_range);
         end_range =start_range+data.length-1;
 
         ResponseEntity<byte[]> response;
@@ -61,6 +62,8 @@ public class StreamService {
             response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return response;
+                }
+       );
     }
 
     private byte[] getContentByRange(File file, long start_range) {

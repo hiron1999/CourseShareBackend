@@ -31,3 +31,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+#service path
+internal:
+  service:
+    activity:
+      path: /Activity/generate/
+      host: http://127.0.0.1
+      port: 8082

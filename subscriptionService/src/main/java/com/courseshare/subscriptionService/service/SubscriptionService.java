@@ -2,19 +2,20 @@ package com.courseshare.subscriptionService.service;
 
 import java.util.List;
 
-import com.courseshare.subscriptionService.entity.SubscriptionEntity;
+
+import Model.SubscriptionModel;
 import com.courseshare.subscriptionService.model.SubscriptionRequest;
 import org.springframework.stereotype.Service;
 
 
 public interface SubscriptionService {
 
-    public SubscriptionEntity getById(long id);
-    public List<SubscriptionEntity> getAll();
-    public List<SubscriptionEntity> getUserSubscrition(long userId);
+    public SubscriptionModel getById(long id);
+    public List<SubscriptionModel> getAll();
+    public List<SubscriptionModel> getUserSubscrition(long userId);
 
-    public SubscriptionEntity addUserSubscription(SubscriptionRequest request);
+    public SubscriptionModel addUserSubscription(SubscriptionRequest request);
 
-    public SubscriptionEntity updateSubscription(SubscriptionEntity subscription);
-
+    public SubscriptionModel updateSubscription(SubscriptionModel subscription);
+    public String removeSubscription(long subId);
 }

@@ -2,8 +2,10 @@ package com.example.AwsService.configration;
 
 import java.util.function.BiFunction;
 
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -72,6 +74,11 @@ public class AwsConfig {
     }
 
 
+    //rabbitmq config
+    @Bean
+    public MessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
 
 
 }

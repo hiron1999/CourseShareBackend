@@ -18,7 +18,7 @@ public class CourseEntity {
 
     private String name;
     private String description ;
-    private String autor;
+    private String author;
 
 
     private List<Module> modules;

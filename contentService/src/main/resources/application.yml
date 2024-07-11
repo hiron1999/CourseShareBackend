@@ -5,14 +5,26 @@ spring:
     mongodb:
       uri: mongodb://localhost:3344/MyContent
       database: MyContent
-#      authentication-database: admin # Optional, only if authentication is enabled
-#      gridfs:
-#        bucket: your-gridfs-bucket
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    queue:
+      initiate-content: q.content-space-allocator
+      dlq: q.DLQ
+    exchange:
+      aws-store: AWS-Storage-Service-Exchange
+      dlx: DLX-Exchange
+    route-key:
+      space-allocate: allocate-content-space
+
 server:
   port: 8082
 
   jpa:
     show-sql: true
+
 
 eureka:
   client:
@@ -29,3 +41,10 @@ logging:
           mongodb:
             core:
               MongoTemplate: DEBUG
+
+#service path
+internal:
+  service:
+    subscription:
+      path: /user/{user_id}/subscriptions
+      domain: http://127.0.0.1:8084

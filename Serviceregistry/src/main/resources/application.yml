@@ -6,7 +6,7 @@ server:
 eureka:
   instance:
     hostname: localhost
-    prefer-ip-address: true
+    preferIpAddress: true
   client:
     fetchRegistry: 'false'
     registerWithEureka: 'false'

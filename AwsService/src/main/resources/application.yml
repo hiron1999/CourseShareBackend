@@ -3,6 +3,33 @@ server:
 spring:
   application:
     name: AWS-SERVICE
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:mysql://localhost:3333/mydb
+    username: root
+    password: pwd
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 aws:
   accessKeyId: AKIAYG42OWDMXDKPHUVY
@@ -15,3 +42,5 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+

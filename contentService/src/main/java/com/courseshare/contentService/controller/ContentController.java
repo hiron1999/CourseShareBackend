@@ -1,29 +1,24 @@
 package com.courseshare.contentService.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.courseshare.contentService.entity.CourseEntity;
 import com.courseshare.contentService.model.CourseDisplayModel;
+import com.courseshare.contentService.model.UserContentDetails;
 import com.courseshare.contentService.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.Update;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@CrossOrigin(origins = "*")
 @RequestMapping("/course")
 public class ContentController {
 
+    private static final int DEFAULT_UID = 99999;
     @Autowired
-    ContentService contentService;
+    private ContentService contentService;
 
     @GetMapping("/")
     public List<CourseDisplayModel> getCourses(){
@@ -31,8 +26,15 @@ public class ContentController {
     }
 
     @GetMapping("/{id}")
-    public CourseEntity getCourceById(@PathVariable String id){
-        return contentService.getDetail( id);
+    public ResponseEntity<?> getCourceById(@PathVariable String id, @RequestParam("userId") Optional<Long> userId){
+        UserContentDetails response;
+        if(userId.isPresent()){
+           response= contentService.getDetail(id,userId.get());
+        }else{
+          response =  contentService.getDetail(id, DEFAULT_UID);
+
+        }
+      return ResponseEntity.ok(response);
     }
     @PostMapping("/")
     public CourseEntity addCourse(@RequestBody CourseEntity course){
@@ -45,5 +47,6 @@ public class ContentController {
 //        contentService
 //
 //    }
+
 
 }

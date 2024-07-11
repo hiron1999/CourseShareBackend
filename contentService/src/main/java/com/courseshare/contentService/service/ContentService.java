@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.courseshare.contentService.entity.CourseEntity;
 import com.courseshare.contentService.model.CourseDisplayModel;
+import com.courseshare.contentService.model.UserContentDetails;
 
 public interface ContentService {
 
@@ -11,5 +12,6 @@ public interface ContentService {
 
     public CourseEntity add(CourseEntity course);
 
-    CourseEntity getDetail(String id);
+    public UserContentDetails getDetail(String cid,long uid);
+
 }

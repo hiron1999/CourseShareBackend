@@ -36,11 +36,11 @@ public class AwsServiceApplication {
 	public List<String> getFiles(){
 		return awsS3Service.getBucketList();
 	}
-	@GetMapping("/file/{name}")
-	public void getfile(@PathVariable String name){
-		System.out.println(BasePath);
-		awsS3Service.saveFile(name);
-	}
+//	@GetMapping("/file/{name}")
+//	public void getfile(@PathVariable String name){
+//		System.out.println(BasePath);
+//		awsS3Service.saveFile(name);
+//	}
 
 	public static void main(String[] args) {
 

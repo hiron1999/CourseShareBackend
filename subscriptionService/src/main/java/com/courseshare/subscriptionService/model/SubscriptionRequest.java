@@ -14,9 +14,9 @@ import lombok.NonNull;
 @Data
 public class SubscriptionRequest {
     @NonNull
-    @JsonProperty(value = "UserId",required = true)
+    @JsonProperty(value = "userId",required = true)
     private long userId;
     @NotNull
-    @JsonProperty(value = "CourseId",required = true)
+    @JsonProperty(value = "courseId",required = true)
     private String courseId;
 }

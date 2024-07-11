@@ -2,12 +2,12 @@ package com.courseshare.contentService.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-@NoArgsConstructor
+
+
+
 @AllArgsConstructor
 @Data
 public class Leacture {
@@ -15,4 +15,9 @@ public class Leacture {
     private String id;
     private String title;
     private String path;
+
+    public Leacture(){
+        id = new ObjectId().toString();
+    }
+
 }

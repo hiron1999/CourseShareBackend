@@ -58,16 +58,6 @@ public class GatewayConfigration {
         };
     }
 
-//    @Bean
-//    public CorsConfiguration corsConfiguration(RoutePredicateHandlerMapping routePredicateHandlerMapping) {
-//        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-//        Arrays.asList(HttpMethod.OPTIONS, HttpMethod.PUT, HttpMethod.GET, HttpMethod.DELETE, HttpMethod.POST).forEach(m -> corsConfiguration.addAllowedMethod(m));
-//        corsConfiguration.addAllowedOrigin("*");
-//        routePredicateHandlerMapping.setCorsConfigurations(new HashMap<String, CorsConfiguration>() {{
-//            put("/**", corsConfiguration);
-//        }});
-//        return corsConfiguration;
-//    }
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, AutenticationFilter autenticationFilter){
@@ -98,6 +88,16 @@ public class GatewayConfigration {
                                 .uri("lb://content-service")
 
 
+                ).route("ActivityApiEndpoint-route",
+                        r ->r
+                                .path("/course-activity/**")
+                                .filters(
+                                        f->f
+                                                .rewritePath("/course-activity/(?<remaining>.*)","/Activity/${remaining}")
+                                )
+                                .uri("lb://content-service")
+
+
                 ).route("UserApiEndpoint-route",
                         r ->r
                                 .path("/Profile/**")
@@ -116,6 +116,7 @@ public class GatewayConfigration {
                                                 .rewritePath("/video-leacture/(?<remaining>.*)","/media/${remaining}")
                                 )
                                 .uri("lb://aws-service")
+
                         )
                 .route("SubscritionApiEndpoint-route",
                         r ->r
@@ -126,7 +127,13 @@ public class GatewayConfigration {
                                 )
                                 .uri("lb://subscription-service")
                         )
+                .route("ResourceEndpoint-route",
+                        r ->r
+                                .path("/`resourse/**")
 
+                                .uri("lb://aws-service")
+
+                )
                 .build();
     }
 }

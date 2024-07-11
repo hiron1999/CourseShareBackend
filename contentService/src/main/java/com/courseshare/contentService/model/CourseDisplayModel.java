@@ -12,6 +12,6 @@ public class CourseDisplayModel {
 
     private String name;
     private String description ;
-    private String autor;
+    private String author;
 
 }
