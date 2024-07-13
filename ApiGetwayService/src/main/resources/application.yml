@@ -12,9 +12,9 @@ spring:
               - GET
               - POST
               - DELETE
-              - OPTION
+              - OPTIONS
             allowedHeaders: "*"
-            allowCredentials: "true"
+            allowCredentials: true
       discovery:
         locator:
           enabled: true

@@ -21,8 +21,8 @@ public class ContentController {
     private ContentService contentService;
 
     @GetMapping("/")
-    public List<CourseDisplayModel> getCourses(){
-        return contentService.getALL();
+    public List<CourseDisplayModel> getCourses(@RequestParam(name = "search_key", required = false)Optional<String> key){
+        return contentService.getALL(key);
     }
 
     @GetMapping("/{id}")

@@ -23,7 +23,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -71,10 +73,10 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
-    public List<CourseDisplayModel> getALL() {
+    public List<CourseDisplayModel> getALL(Optional<String>key) {
 //        return reposetory.findAll();
-        Query query = new Query();
-        query.fields().exclude("modules");
+        Query query = queryBuilder(key);
+//        query.fields().exclude("modules");
         List<CourseEntity> courseEntities= mongoTemplate.find(query,CourseEntity.class);
 
 
@@ -83,6 +85,16 @@ public class ContentServiceImpl implements ContentService{
              BeanUtils.copyProperties(course,model);
              return model;
         }).collect(toList());
+    }
+
+    private Query queryBuilder(Optional<String> search_key) {
+        Query query = new Query();
+        search_key.ifPresent(key -> {
+            query.addCriteria(Criteria.where("name").regex(key,"i")
+                    .orOperator(Criteria.where("description").regex(key,"i")));
+        });
+        query.fields().exclude("modules");
+        return query;
     }
 
     @Transactional

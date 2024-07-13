@@ -129,7 +129,7 @@ public class AuthSrevice implements CustomAuthInterface{
     public AuthResponse getbyRefreshToken(String refreshToken) {
         UserCredential userCredential =validateRefreshtoken(refreshToken);
         AuthResponse response =generateAuth(userCredential.getId(),userCredential.getEmailId());
-        updateRefreshToken(refreshToken);
+        updateRefreshToken(response.getRefershToken());
         return response;
     }
 
