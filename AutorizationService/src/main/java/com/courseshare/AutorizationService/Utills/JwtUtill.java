@@ -2,9 +2,7 @@ package com.courseshare.AutorizationService.Utills;
 
 import java.security.Key;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 
@@ -24,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class JwtUtill {
 
     public static final String USER_ID = "user_id";
-
+    private Set<String> INVALID_TOKENS = new HashSet<>();
     @Autowired
     private UserCredentialReposetory credentialReposetory;
     @Autowired
@@ -63,8 +61,13 @@ public class JwtUtill {
     public Boolean validateToken(String token) {
         final String email = extractUsername(token);
         UserDetails userDetails = (CustomUserDetails)userDetailsService.loadUserByUsername(email);
-        return email.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        return email.equals(userDetails.getUsername()) && !isTokenExpired(token) && !INVALID_TOKENS.contains(token) ;
     }
+    //make access tokens invalid
+    public void invalidateToken(String token){
+        INVALID_TOKENS.add(token);
+    }
+
     public Boolean validateRefreshToken(String token){
         final long id=extractUserid(token);
         Boolean isValid = true;

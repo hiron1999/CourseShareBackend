@@ -133,6 +133,18 @@ public class AuthSrevice implements CustomAuthInterface{
         return response;
     }
 
+    @Override
+    public boolean invalidateToken(String token) {
+       try {
+           jwtUtill.invalidateToken(token);
+           return true;
+       }catch (Exception e){
+           log.error(e.getLocalizedMessage());
+           return false;
+       }
+
+    }
+
     private AuthResponse generateAuth(long id, String emailId) {
 
         final String accessToken = jwtUtill.generateToken(emailId);

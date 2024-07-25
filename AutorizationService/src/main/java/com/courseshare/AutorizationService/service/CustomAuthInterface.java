@@ -13,4 +13,5 @@ public interface CustomAuthInterface {
     public boolean validateToken(String token);
 
     AuthResponse getbyRefreshToken(String refreshToken);
+    public boolean invalidateToken(String token);
 }

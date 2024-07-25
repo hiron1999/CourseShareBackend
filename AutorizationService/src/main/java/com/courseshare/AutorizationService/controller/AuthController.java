@@ -18,14 +18,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -124,6 +117,28 @@ public class AuthController {
                   .status(HttpStatus.SC_UNAUTHORIZED)
                   .body("Unable to presist refresh token");
       }
+    }
+
+    @PostMapping("/invalidateToken")
+    public ResponseEntity<?> logout( @RequestHeader("Authorization")String authHeader){
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+
+            log.info("invalidating token :",token);
+
+            if (authservice.invalidateToken(token)) {
+                ResponseCookie cookie = ResponseCookie.from("Refresh_Token")
+                        .value("")
+                        .httpOnly(true)
+                        .sameSite("None")
+                        .secure(true)
+                        .path("/auth")
+                        .maxAge(0)
+                        .build();
+                return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body("logged out successful");
+            }
+        }
+        return (ResponseEntity<?>) ResponseEntity.internalServerError();
     }
 
 }

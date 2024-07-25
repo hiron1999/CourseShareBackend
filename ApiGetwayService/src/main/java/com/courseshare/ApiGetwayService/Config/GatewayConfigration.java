@@ -78,6 +78,18 @@ public class GatewayConfigration {
 
 
                 )
+                .route("logout",
+                        r->r
+                                .method(HttpMethod.OPTIONS,HttpMethod.POST).and()
+                                .path("/auth/invalidateToken")
+
+                                .filters(f->f
+
+                                                .rewritePath("/auth/(?<remaining>.*)","/autentication/${remaining}")
+                                                .filter(autenticationFilter.apply(config -> new AutenticationFilter.Config()),0)
+                                )
+                                .uri("lb://autorization-service")
+                        )
                 .route("ContentApiEndpoint-route",
                         r ->r
                                 .path("/course/**")
@@ -94,6 +106,7 @@ public class GatewayConfigration {
                                 .filters(
                                         f->f
                                                 .rewritePath("/course-activity/(?<remaining>.*)","/Activity/${remaining}")
+
                                 )
                                 .uri("lb://content-service")
 
