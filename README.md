@@ -22,9 +22,8 @@
 
 ### System Arcitecher:
 
-<div style="background-color: #d3d3d3; padding: 20px; text-align: center;">
-  <img src="Arcitecher.png" alt="System Desgin" >
-</div>
+![System Design](Arcitecher.png)
+
 
 ## ✨ Key Features:
 - **📚 Diverse Course Library**: Access a variety of courses tailored for self-paced learning.
